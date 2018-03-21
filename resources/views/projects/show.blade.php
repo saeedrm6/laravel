@@ -62,6 +62,23 @@
                     </ol>
                 </div>
 
+                <br><br>
+                <div class="sidebar-module">
+                    <h4>Active Users</h4>
+                    <form class="form-inline" method="post" action="{{route('projects.adduser')}}">
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <label for="exampleInputEmail2">Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="saeed@rahimimanesh.com">
+                        </div>
+                        <input type="hidden" name="project_id" value="{{$project->id}}">
+                        <button type="submit" class="btn btn-danger text-center">Add User</button>
+                    </form>
+                    @foreach($users as $user)
+                        <ol>{{$user->name}}</ol>
+                        @endforeach
+                </div>
+
                 {{--<div class="sidebar-module">--}}
                     {{--<h4>Archives</h4>--}}
                     {{--<ol class="list-unstyled">--}}

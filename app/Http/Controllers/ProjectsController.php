@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Company;
 use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,6 +58,7 @@ class ProjectsController extends Controller
             'days'  =>  $request->days
         ]);
         if ($project){
+            $project->users()->attach(Auth::user()->id);
             return redirect(route('projects.index'))->with('success','The Project has been added!');
         }
         return redirect(route('projects.index'))->with('errors','Error on Save!');
@@ -75,7 +77,8 @@ class ProjectsController extends Controller
         if ($project->user_id == Auth::user()->id){
 //            $comments = Comment::where('commentable_id',$project->id)->orderBy('created_at')->get();
             $comments = $project->comments;
-            return view('projects.show',compact('project','comments'));
+            $users = $project->users;
+            return view('projects.show',compact('project','comments','users'));
         }
 
         return abort(404);
@@ -119,5 +122,17 @@ class ProjectsController extends Controller
         if ($status){
             return redirect(route('projects.index'))->with('success','The '.$project->name.' has been deleted!');
         }
+    }
+
+    public function adduser(Request $request)
+    {
+        $project = Project::find($request->input('project_id'));
+
+        $user = User::where('email',$request->input('email'))->first();
+
+        if ($user){
+            $project->users()->attach($user->id);
+        }
+        return back();
     }
 }

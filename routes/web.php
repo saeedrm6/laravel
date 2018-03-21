@@ -27,4 +27,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users','UsersController');
     Route::resource('comments','CommentsController');
     Route::get('projects/create/{id?}','ProjectsController@create');
+
+    Route::post('projects/adduser','ProjectsController@adduser')->name('projects.adduser');
 });

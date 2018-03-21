@@ -40,6 +40,21 @@
                             <li><a class="nav-link" href="{{route('companies.index')}}">My Companies</a></li>
                             <li><a class="nav-link" href="{{route('projects.index')}}">Projects</a></li>
                             <li><a class="nav-link" href="{{route('tasks.index')}}">Tasks</a></li>
+                            @if(\Illuminate\Support\Facades\Auth::user()->role_id == 1)
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Admin <span class="caret"></span>
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('companies.index') }}">All Companies</a>
+                                        <a class="dropdown-item" href="{{ route('projects.index') }}">All Projects</a>
+                                        <a class="dropdown-item" href="{{ route('users.index') }}">All Users</a>
+                                        <a class="dropdown-item" href="{{ route('tasks.index') }}">All Tasks</a>
+                                        <a class="dropdown-item" href="{{ route('roles.index') }}">All Roles</a>
+                                    </div>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
